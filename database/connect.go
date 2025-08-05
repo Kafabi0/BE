@@ -5,6 +5,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"loginapp/models"
+	// "github.com/lib/pq"
 	"os"
 )
 
