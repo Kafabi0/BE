@@ -1,8 +1,14 @@
+// models/pasien.go
 package models
 
 type Pasien struct {
-	ID     uint   `gorm:"primaryKey" json:"id"`
-	Nama   string `gorm:"uniqueIndex" json:"nama"`
-	Umur   string `json:"umur"`
-	Alamat string `json:"alamat"`
+	ID          uint   `json:"id" gorm:"primaryKey"`
+	Nama        string `json:"nama"`
+	Umur        int    `json:"umur"`
+	JenisKelamin string `json:"jenis_kelamin"`
+	Alamat      string `json:"alamat"`
+	NoTelepon   string `json:"no_telepon"`
+}
+func (Pasien) TableName() string {
+	return "pasien" // sesuai nama tabel di database kamu
 }
