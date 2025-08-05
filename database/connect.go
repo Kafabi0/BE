@@ -12,9 +12,9 @@ import (
 var DB *gorm.DB
 
 func ConnectDB() {
-	dsn := os.Getenv("DATABASE_DSN")
+	dsn := os.Getenv("DATABASE_URL")
 	if dsn == "" {
-		log.Fatal("DATABASE_DSN environment variable not set")
+		log.Fatal("DATABASE_URL environment variable not set")
 	}
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
