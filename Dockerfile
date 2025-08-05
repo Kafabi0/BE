@@ -13,16 +13,13 @@ RUN go build -o main .
 # Run stage
 FROM alpine:latest
 
-# Install bash (untuk wait-for-it.sh) dan tzdata (timezone database)
-RUN apk add --no-cache bash tzdata
+# Install tzdata supaya timezone bisa di-set
+RUN apk add --no-cache tzdata
 
 WORKDIR /app
 
 COPY --from=builder /app/main .
-COPY wait-for-it.sh .
-
-RUN chmod +x wait-for-it.sh
 
 EXPOSE 8080
 
-CMD ["./wait-for-it.sh", "db:5432", "--", "./main"]
+CMD ["./main"]

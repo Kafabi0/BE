@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-
+"os"
 	"loginapp/database"
 	"loginapp/handlers"
 	"loginapp/middleware" // kita buat middleware role-based
@@ -99,8 +99,12 @@ r.HandleFunc("/api/obat/delete", handlers.DeleteObat).Methods("DELETE")
 		AllowCredentials: true,
 	})
 	handler := c.Handler(r)
-
+port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 	// Jalankan server
-	log.Println("Server running on http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", handler))
+
+	log.Println("Server running on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, handler))
 }
