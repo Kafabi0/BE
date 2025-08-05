@@ -3,6 +3,7 @@ package database
 import (
     "log"
     "os"
+    "time"
 
     "gorm.io/driver/postgres"
     "gorm.io/gorm"
@@ -16,7 +17,17 @@ func ConnectDB() {
     if dsn == "" {
         log.Fatal("DATABASE_URL environment variable not set")
     }
-    db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+    loc, err := time.LoadLocation("Asia/Jakarta")
+    if err != nil {
+        log.Fatal("Failed to load timezone:", err)
+    }
+
+    db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+        NowFunc: func() time.Time {
+            return time.Now().In(loc)
+        },
+    })
     if err != nil {
         log.Fatal("Gagal konek database:", err)
     }
@@ -35,5 +46,5 @@ func ConnectDB() {
 
     DB = db
 
-    log.Println("Koneksi GORM ke database berhasil!")
+    log.Println("Koneksi GORM ke database berhasil dengan timezone Asia/Jakarta!")
 }
